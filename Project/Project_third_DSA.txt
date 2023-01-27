@@ -1,0 +1,465 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+//Parent Class
+class shop {
+public:
+	int price;
+	int quantity;
+	static float bill;
+	
+	virtual void read(){}
+	virtual void display(){}
+	virtual void available_units(){}
+	virtual void admin_menu(){}
+};
+
+float shop::bill = 0;
+
+//Child Class [Drinks]
+class drinks: public shop {
+public:
+	float litre;
+};
+
+
+//C O K E
+
+
+class coke: public drinks {
+public:
+	coke* next;
+
+	int option_coke;
+
+	static coke* head_coke;
+	static int available_quantity;
+	void read() {
+
+		coke* newnode = new coke;
+
+		if (head_coke == NULL) {
+			head_coke = newnode;
+			head_coke->next = NULL;
+		}
+
+		else {
+			newnode->next = head_coke;
+			head_coke = newnode;
+		}
+
+		cout << "Enter 1 to buy 1 litre of coke " << endl;
+		cout << "Enter 2 to buy 1.5 litres of coke " << endl;
+		cout << "Enter 3 to buy 2 litres of coke " << endl;
+		cout << "Enter 4 to buy 2.5 litres of coke " << endl;
+
+		cin >> option_coke; cout << endl;
+
+		system("CLS");
+
+		if (option_coke <= 4) {
+
+			switch (option_coke) {
+			case 1: {
+
+				newnode->litre = 1.0;
+
+				cout << "Enter the quantity of bottles you want to buy : "; cin >> newnode->quantity; cout << endl;
+
+				system("CLS");
+
+				if (newnode->quantity < available_quantity) {
+					cout << "Processing..." << endl;
+
+					Sleep(1000);
+					system("CLS");
+
+					available_quantity = available_quantity - newnode->quantity;
+
+					cout << "Success" << endl;
+
+					Sleep(300);
+					system("CLS");
+
+					bill = bill + 80;
+				}
+
+				else {
+					cout << "The quantity you have entered is unavailable" << endl;
+					cout << "Available quantity = " << available_quantity << endl;
+				}
+
+				break;
+			}
+
+			case 2: {
+
+				newnode->litre = 1.5;
+
+				cout << "Enter the quantity of bottles you want to buy : "; cin >> newnode->quantity; cout << endl;
+				if (newnode->quantity < available_quantity) {
+
+					cout << "Processing..." << endl;
+
+					Sleep(1000);
+					system("CLS");
+
+					available_quantity = available_quantity - newnode->quantity;
+
+					cout << "Success" << endl;
+
+					Sleep(300);
+					system("CLS");
+
+					bill = bill + 120;
+				}
+				else {
+					cout << "The quantity you have entered is unavailable" << endl;
+					cout << "Available quantity = " << available_quantity << endl;
+				}
+				break;
+			}
+
+			case 3: {
+
+				newnode->litre = 2.0;
+
+				cout << "Enter the quantity of bottles you want to buy : "; cin >> newnode->quantity; cout << endl;
+				if (newnode->quantity < available_quantity) {
+					cout << "Processing..." << endl;
+
+					Sleep(1000);
+					system("CLS");
+
+					available_quantity = available_quantity - newnode->quantity;
+
+					cout << "Success" << endl;
+
+					Sleep(300);
+					system("CLS");
+
+					bill = bill + 160;
+				}
+				else {
+					cout << "The quantity you have entered is unavailable" << endl;
+					cout << "Available quantity = " << available_quantity << endl;
+				}
+				break;
+			}
+
+			case 4: {
+
+				newnode->litre = 2.5;
+
+				cout << "Enter the quantity of bottles you want to buy : "; cin >> newnode->quantity; cout << endl;
+				if (newnode->quantity < available_quantity) {
+					cout << "Processing..." << endl;
+
+					Sleep(1000);
+					system("CLS");
+
+					available_quantity = available_quantity - newnode->quantity;
+
+					cout << "Success" << endl;
+
+					Sleep(300);
+					system("CLS");
+
+					bill = bill + 200;
+				}
+				else {
+					cout << "The quantity you have entered is unavailable" << endl;
+					cout << "Available quantity = " << available_quantity << endl;
+				}
+				break;
+			}
+		}
+
+		}
+		else {
+			cout << "Invalid option selected" << endl;
+		}
+	}
+
+	void available_units() {
+		cout << "The quantity of coke available is : " << available_quantity << endl;
+	}
+
+	void display() {
+		coke* temp = head_coke;
+		if (temp == NULL) {
+			cout << "Nothing added to cart" << endl << endl;
+		}
+		else {
+			cout << "**********COKE**********" << endl;
+			while (temp != NULL) {
+				cout << "************************" << endl;
+				cout <<"Quantity of : "<< temp->litre <<"- litre COKE : " << temp->quantity << endl;
+				cout << "************************" << endl;
+				cout << endl;
+				temp = temp->next;
+			}
+		}
+	}
+
+};
+
+
+//S P R I T E
+
+class sprite : public drinks {
+public:
+	sprite* next;
+
+	int option_sprite;
+
+	static sprite* head_sprite;
+	static int available_quantity;
+	void read() {
+
+		sprite* newnode = new sprite;
+
+		if (head_sprite == NULL) {
+			head_sprite = newnode;
+			head_sprite->next = NULL;
+		}
+
+		else {
+			newnode->next = head_sprite;
+			head_sprite = newnode;
+		}
+
+		cout << "Enter 1 to buy 1 litre of sprite " << endl;
+		cout << "Enter 2 to buy 1.5 litres of sprite " << endl;
+		cout << "Enter 3 to buy 2 litres of sprite " << endl;
+		cout << "Enter 4 to buy 2.5 litres of sprite " << endl;
+
+		cin >> option_sprite; cout << endl;
+
+		system("CLS");
+
+		if (option_sprite <= 4) {
+
+			switch (option_sprite) {
+			case 1: {
+
+				newnode->litre = 1.0;
+
+				cout << "Enter the quantity of bottles you want to buy : "; cin >> newnode->quantity; cout << endl;
+
+				system("CLS");
+
+				if (newnode->quantity < available_quantity) {
+					cout << "Processing..." << endl;
+
+					Sleep(1000);
+					system("CLS");
+
+					available_quantity = available_quantity - newnode->quantity;
+
+					cout << "Success" << endl;
+
+					Sleep(300);
+					system("CLS");
+
+					bill = bill + 80;
+				}
+
+				else {
+					cout << "The quantity you have entered is unavailable" << endl;
+					cout << "Available quantity = " << available_quantity << endl;
+				}
+
+				break;
+			}
+
+			case 2: {
+
+				newnode->litre = 1.5;
+
+				cout << "Enter the quantity of bottles you want to buy : "; cin >> newnode->quantity; cout << endl;
+				if (newnode->quantity < available_quantity) {
+
+					cout << "Processing..." << endl;
+
+					Sleep(1000);
+					system("CLS");
+
+					available_quantity = available_quantity - newnode->quantity;
+
+					cout << "Success" << endl;
+
+					Sleep(300);
+					system("CLS");
+
+					bill = bill + 120;
+				}
+				else {
+					cout << "The quantity you have entered is unavailable" << endl;
+					cout << "Available quantity = " << available_quantity << endl;
+				}
+				break;
+			}
+
+			case 3: {
+
+				newnode->litre = 2.0;
+
+				cout << "Enter the quantity of bottles you want to buy : "; cin >> newnode->quantity; cout << endl;
+				if (newnode->quantity < available_quantity) {
+					cout << "Processing..." << endl;
+
+					Sleep(1000);
+					system("CLS");
+
+					available_quantity = available_quantity - newnode->quantity;
+
+					cout << "Success" << endl;
+
+					Sleep(300);
+					system("CLS");
+
+					bill = bill + 160;
+				}
+				else {
+					cout << "The quantity you have entered is unavailable" << endl;
+					cout << "Available quantity = " << available_quantity << endl;
+				}
+				break;
+			}
+
+			case 4: {
+
+				newnode->litre = 2.5;
+
+				cout << "Enter the quantity of bottles you want to buy : "; cin >> newnode->quantity; cout << endl;
+				if (newnode->quantity < available_quantity) {
+					cout << "Processing..." << endl;
+
+					Sleep(1000);
+					system("CLS");
+
+					available_quantity = available_quantity - newnode->quantity;
+
+					cout << "Success" << endl;
+
+					Sleep(300);
+					system("CLS");
+
+					bill = bill + 200;
+				}
+				else {
+					cout << "The quantity you have entered is unavailable" << endl;
+					cout << "Available quantity = " << available_quantity << endl;
+				}
+				break;
+			}
+			}
+
+		}
+		else {
+			cout << "Invalid option selected" << endl;
+		}
+	}
+
+	void available_units() {
+		cout << "The quantity of coke available is : " << available_quantity << endl;
+	}
+
+	void display() {
+		sprite* temp = head_sprite;
+		if (temp == NULL) {
+			cout << "Nothing added to cart" << endl;
+		}
+		else {
+			cout << "**********SPRITE**********" << endl << endl;
+			while (temp != NULL) {
+				cout << "************************" << endl;
+				cout << "Quantity of : " << temp->litre << "- litre sprite : " << temp->quantity << endl;
+				cout << "************************" << endl;
+				cout << endl;
+				temp = temp->next;
+			}
+		}
+	}
+
+};
+
+//S T A T I C Variables
+
+coke* coke::head_coke = NULL; //head of coke
+int coke::available_quantity = 100;
+
+sprite* sprite::head_sprite = NULL; //head of sprite
+int sprite::available_quantity = 100;
+
+int main() {
+	
+	int option_main; int option_drinks; int option_food;
+	while (1) {
+
+		cout << "ENTER 1 TO BUY DRINKS" << endl;
+		cout << "ENTER 2 TO BUY FOOD" << endl;
+		cout << "ENTER 3 TO ENTER ADMIN MENU" << endl;
+		cin >> option_main; cout << endl;
+
+		system("CLS");
+
+		if (option_main <= 3){
+
+			switch (option_main) {
+			case 1:
+			{
+				cout << "ENTER 1 TO BUY COKE" << endl;
+				cout << "ENTER 2 TO BUY SPRITE" << endl;
+				cout << "ENTER 3 TO DISPLAY CART" << endl;
+				cin >> option_drinks; cout << endl;
+				switch (option_drinks) {
+
+				case 1:
+				{
+					system("CLS");
+					shop* s_coke = new coke;
+					s_coke->read();
+
+					break;
+				}
+
+				case 2:
+				{
+					system("CLS");
+					shop* s_sprite = new sprite;
+					s_sprite->read();
+
+					break;
+				}
+
+				case 3:
+				{
+					system("CLS");
+					shop* disp_coke = new coke;
+					shop* disp_sprite = new sprite;
+					disp_coke->display();
+					disp_sprite->display();
+
+					break;
+				}
+
+
+				}
+				break;
+			}
+
+			}
+	}
+
+		else {
+			system("CLS");
+			cout << "Invlaid option" << endl;
+			Sleep(300);
+			system("CLS");
+		}
+
+	}
+}

@@ -1,0 +1,363 @@
+#include <iostream>
+using namespace std;
+
+class student {
+public:
+	student* next;
+	student* prev;
+	student* end;
+	student* head = NULL;
+	int roll;
+	int  count = 0;
+};
+
+class list : public student {
+public:
+	student* create_node() {
+		student* newnode = new student;
+		return newnode;
+	}
+
+	student* find_last() {
+		student* temp = head;
+		student* last_node = NULL;
+		if (head == NULL) {
+			cout << "LAST NODE NOT FOUND[ERROR: LINKED LIST IS EMPTY]" << endl;
+		}
+		else {
+			while (temp->next != NULL) {
+				temp = temp->next;
+			}
+			last_node = temp;
+		}
+		return last_node;
+	}
+
+	void input_data(student* newnode) {
+		cout << "\nENTER THE ROLL NO : "; cin >> newnode->roll; cout << endl;
+	}
+
+	void insert_at_head(student* newnode) {
+		student* temp = head;
+		if (head == NULL) {
+			head = newnode;
+			newnode->prev = NULL;
+			newnode->next = NULL;
+		}
+		else {
+			newnode->next = temp;
+			newnode->prev = NULL;
+			head->prev = newnode;
+			head = newnode;
+		}
+		count++;
+	}
+
+	void insert_at_end(student* newnode) {
+		student* temp = head;
+		student* last_node = NULL;
+		if (head == NULL) {
+			head = newnode;
+			newnode->next = NULL;
+		}
+		else {
+			last_node = find_last();
+			last_node->next = newnode;
+			newnode->next = NULL;
+			newnode->prev = last_node;
+		}
+		count++;
+	}
+
+	void display_from_head() {
+		student* temp = head;
+		if (head == NULL) {
+			cout << "NOTHING IN THE LIST TO BE DISPLAYED" << endl;
+		}
+		else {
+			while (temp != NULL) {
+				cout << temp->roll << endl;
+				temp = temp->next;
+			}
+		}
+	}
+
+	void display_from_end() {
+		student* temp = head;
+		student* last_node = NULL;
+		if (head == NULL) {
+			cout << "NOTHING IN THE LIST TO BE DISPLAYED" << endl;
+		}
+		else {
+			last_node = find_last();
+			while (last_node != NULL) {
+				cout << last_node->roll << endl;
+				last_node = last_node->prev;
+			}
+		}
+	}
+
+	int search_by_roll(int roll_search) {
+		student* temp = head;
+		if (head == NULL) {
+			cout << "THE LIST IS EMPTY" << endl;
+		}
+		else {
+			while (temp != NULL) {
+				if (temp->roll == roll_search) {
+					cout << "RECORD OF ROLL NO : " << roll_search << " Found" << endl;
+					return roll_search;
+					break;
+				}
+				else {
+					temp = temp->next;
+					return roll_search = 0;
+				}
+			}
+		}
+	}
+
+	void search_by_node(int node_search) {
+		student* temp = head;
+		int count_ = 1;
+		if (head == NULL) {
+			cout << "NO NODE IN THE LIST" << endl;
+		}
+		else {
+			if (node_search <= count) {
+				while (temp != NULL) {
+					if (count_ == node_search) {
+						cout << "DISPLAYING ROLL NO : " << temp->roll;
+						break;
+					}
+					else {
+						temp = temp->next;
+						count_++;
+					}
+				}
+			}
+			else {
+				cout << "THE VALUE ENTERED IS GREATER THAN THE EXISTING NUMBER OF NODES" << endl;
+			}
+		}
+	}
+
+	void insert_after_node(student* newnode, int node_num) {
+		int count_ = 1;
+		student* temp = head;
+		if (head == NULL) {
+			cout << "THE LIST IS EMPTY" << endl;
+		}
+		else {
+			if (node_num <= count) {
+				while (temp != NULL) {
+					if (count_ == node_num) {
+						student* temp_next = temp->next;
+						temp->next = newnode;
+						newnode->next = temp_next;
+						newnode->prev = temp;
+						count++;
+						break;
+					}
+					else {
+						temp = temp->next;
+					}
+				}
+			}
+		}
+	}
+
+	void delete_at_head() {
+		if (head == NULL) {
+			cout << "THE LIST IS EMPTY" << endl;
+		}
+		else {
+			student* temp_del = head;
+			head = head->next;
+			head->prev = NULL;
+			delete(temp_del);
+			count--;
+		}
+	}
+
+	void delete_at_end() {
+		student* temp = head;
+		student* prev_node = head;
+		if (head == NULL) {
+			cout << "THE LIST IS EMPTY" << endl;
+		}
+		else {
+			while (temp->next != NULL) {
+				prev_node = temp;
+				temp = temp->next;
+			}
+			prev_node->next = NULL;
+		}
+
+		count--;
+	}
+
+	void delete_node(int del_node_opt) {
+		student* temp = head;
+		int count_ = 1;
+		if (head == NULL) {
+			cout << "THE LIST IS EMPTY" << endl;
+		}
+		else if (del_node_opt < 4) {
+			if (del_node_opt == 1) {
+				head = temp->next;
+			}
+			else if (del_node_opt == 2) {
+				head->next = temp->next->next;
+			}
+			else if (del_node_opt == 3) {
+				student* temp_prev = temp->next;
+				temp_prev->next = NULL;
+			}
+		}
+		else {
+			if (del_node_opt <= count) {
+				while (temp != NULL) {
+					if (count_ == del_node_opt) {
+						student* prev_prev = temp->prev;
+						student* temp_next = temp->next;
+						prev_prev->next = temp_next;
+						temp_next->prev = prev_prev;
+						count_++;
+						count--;
+						break;
+					}
+					else {
+						temp = temp->next;
+						count_++;
+					}
+				}
+			}
+		}
+	}
+
+	void delete_at_roll(int roll_del) {
+		int search_roll = search_by_roll(roll_del);
+		if (search_roll == 0) {
+			cout << "THE SPECIFIED ROLL NUMBER WAS NOT FOUND" << endl;
+		}
+		else {
+
+		}
+	}
+};
+
+
+int main() {
+	list l;
+	cout << "WELCOME TO STUDENT'S PORTAL **[MADE USING DOUBLY LINKED LIST]**" << endl;
+	while (1) {
+		int opt;
+		cout << "ENTER 1 TO INPUT DATA [AT HEAD]" << endl;
+		cout << "ENTER 2 TO INPUT DATA [AT END]" << endl;
+		cout << "ENTER 3 TO DISPLAY DATA FROM HEAD" << endl;
+		cout << "ENTER 4 TO DISPLAY DATA FROM END" << endl;
+		cout << "ENTER 5 TO SEARCH BY ROLL NO" << endl;
+		cout << "ENTER 6 TO SEARCH BY NODE" << endl;
+		cout << "ENTER 7 TO INPUT DATA AT AFTER NODE" << endl;
+		cout << "ENTER 8 TO DELETE DATA [AT HEAD]" << endl;
+		cout << "ENTER 9 TO DELETE DATA [AT END]" << endl;
+		cout << "ENTER 10 TO DELETE A SPECIFIC NODE" << endl;
+		cout << "ENTER 11 TO DELETE A SPECIFIC ROLL NUMBER" << endl;
+		cout << "ENTER 12 TO EXIT" << endl;
+		cin >> opt;
+		system("CLS");
+		switch (opt) {
+		case 1:
+		{
+			student* newnode = l.create_node();
+			l.input_data(newnode);
+			l.insert_at_head(newnode);
+			system("CLS");
+			break;
+		}
+
+		case 2:
+		{
+			student* newnode = l.create_node();
+			l.input_data(newnode);
+			l.insert_at_end(newnode);
+			system("CLS");
+			break;
+		}
+
+		case 3:
+		{
+			l.display_from_head();
+			break;
+		}
+
+		case 4:
+		{
+			l.display_from_end();
+			break;
+		}
+
+		case 5:
+		{
+			int roll_search;
+			cout << "ENTER THE ROLL NO TO BE SEARCHED : "; cin >> roll_search; cout << endl;
+			l.search_by_roll(roll_search);
+			break;
+		}
+
+		case 6:
+		{
+			int node_search;
+			cout << "ENTER THE NODE NUMBER TO DISPLAY RECORD OF : "; cin >> node_search; cout << endl;
+			l.search_by_node(node_search);
+			break;
+		}
+
+		case 7:
+		{
+			student* newnode = l.create_node();
+			l.input_data(newnode);
+			int node_num;
+			cout << "ENTER THE NODE NUMBER TO INSERT AFTER"; cin >> node_num; cout << endl;
+			l.insert_after_node(newnode, node_num);
+			break;
+		}
+
+		case 8:
+		{
+			l.delete_at_head();
+			break;
+		}
+
+		case 9:
+		{
+			l.delete_at_end();
+			break;
+		}
+
+		case 10:
+		{
+			int del_node_opt;
+			cout << "ENTER NODE THAT YOU WANT TO DELETE"; cin >> del_node_opt;
+			l.delete_node(del_node_opt);
+			system("CLS");
+			break;
+		}
+
+		case 11:
+		{
+			int roll_del;
+			cout << "ENTER THE ROLL NUMBER YOU WANT TO DELETE : "; cin >> roll_del; cout << endl;
+			l.delete_at_roll(roll_del);
+			break;
+		}
+
+		case 12:
+		{
+			exit(0);
+			break;
+		}
+		}
+	}
+}

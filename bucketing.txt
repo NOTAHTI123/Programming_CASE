@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+
+class node
+{
+public:
+    node* next;
+    int data;
+
+    node* head = NULL;
+};
+
+class bucketing : public node
+{
+public:
+    node* arr[10];
+    node* create_node()
+    {
+        node* newnode = new node;
+        return newnode;
+    }
+    void insert()
+    {
+        node* newnode = create_node();
+        cout << "Enter the data : ";
+        cin >> newnode->data;
+        cout << endl;
+        int temp = newnode->data;
+        int temp_final = temp % 10;
+        if (arr[temp_final]->head == NULL)
+        {
+            arr[temp_final]->head = newnode;
+            newnode->next = NULL;
+        }
+        else
+        {
+            newnode->next = arr[temp_final]->head;
+            arr[temp_final]->head = newnode;
+        }
+    }
+    void display()
+    {
+        int temp = 0;
+        while (temp < 10)
+        {
+            if (arr[temp]->head == NULL)
+            {
+                temp++;
+            }
+            else
+            {
+                node* temp_trav = arr[temp]->head;
+                while (temp_trav != NULL)
+                {
+                        cout << temp_trav->data << " _ ";
+                        temp_trav = temp_trav->next;
+                }
+                cout << endl;
+                temp++;
+            }
+        }
+    }
+};
+
+int main()
+{
+    bucketing b;
+    int temp_ = 0;
+    while (temp_ < 10) {
+        node* newnode = new node;
+        b.arr[temp_] = new node;
+        temp_++;
+    }
+    int opt;
+    while (1)
+    {
+        cout << "Enter 1 to insert" << endl;
+        cout << "Enter 2 to display" << endl;
+        cin >> opt;
+        cout << endl;
+        switch (opt)
+        {
+        case 1:
+        {
+            b.insert();
+            break;
+        }
+        case 2:
+        {
+            b.display();
+        }
+        }
+    }
+}

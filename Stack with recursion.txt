@@ -1,0 +1,114 @@
+#include <iostream>
+using namespace std;
+
+class stack
+{
+public:
+	int arr[10];
+	int trav;
+	int top = 10;
+	int traverse_rev = 9;
+
+	void insert_in_stack(int data)
+	{
+		if (top == 0)
+		{
+			cout << "Stack Overflow" << endl;
+		}
+		else
+		{
+			top--;
+			arr[top] = data;
+		}
+	}
+
+	void display_original()
+	{
+		if (top == 10)
+		{
+			cout << "Stack is Empty" << endl;
+		}
+		else
+		{
+			int i = top;
+			while (i < 10)
+			{
+				cout << arr[i] << "\t";
+				i++;
+			}
+			cout << endl;
+		}
+	}
+
+	void reverse_stack(stack& snick, int top_original)
+	{
+		if (top_original == 9)
+		{
+			top--;
+			arr[traverse_rev] = snick.arr[top_original];
+			return;
+		}
+
+			arr[traverse_rev] = snick.arr[top_original];
+			top_original++;
+			traverse_rev--;
+			top--;
+			reverse_stack(snick, top_original);
+	}
+
+	void display_reversed()
+	{
+		if (top == 10)
+		{
+			cout << "Stack is Empty" << endl;
+		}
+		else
+		{
+			int i = top;
+			while (i < 10)
+			{
+				cout << arr[i] << "\t";
+				i++;
+			}
+			cout << endl;
+		}
+	}
+};
+
+int main()
+{
+	int opt;
+	stack s;
+	stack s_rev;
+	while (1)
+	{
+		cout << "Enter 1 to insert in stack" << endl;
+		cout << "Enter 2 to display original stack" << endl;
+		cout << "Enter 3 to reverse the original stack and display it" << endl;
+		cin >> opt;
+		cout << endl;
+		switch (opt)
+		{
+		case 1:
+		{
+			int input;
+			cout << "Enter the data to insert : ";
+			cin >> input;
+			cout << endl;
+			s.insert_in_stack(input);
+			break;
+		}
+		case 2:
+		{
+			s.display_original();
+			break;
+		}
+		case 3:
+		{
+			s_rev.reverse_stack(s, s.top);
+			s_rev.display_reversed();
+			break;
+		}
+		}
+	}
+}

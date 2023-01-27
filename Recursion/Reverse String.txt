@@ -1,0 +1,22 @@
+
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+void rev(char arr[], int size)
+{
+    if(size == 0){
+        cout << arr[size];
+        return;
+    }
+    cout << arr[size];
+    return rev(arr, size - 1);
+}
+
+int main()
+{
+    char arr[10];
+    cout << "Enter the Number : ";
+    gets(arr);
+    rev(arr, 3);
+}

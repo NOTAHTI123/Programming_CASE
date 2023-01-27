@@ -1,0 +1,227 @@
+//Leaf Deletion
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+    node* left;
+    node* right;
+    int data;
+};
+
+node* create_node(int passed_data) {
+    node* newnode = new node;
+    newnode->data = passed_data;
+    return newnode;
+}
+
+node* insert_in_binary_search_tree(node* root, int passed_data) {
+    if (root == NULL) {
+        root = create_node(passed_data);
+        root->left = NULL;
+        root->right = NULL;
+        return root;
+    }
+
+    else {
+        if (passed_data < root->data) {
+            root->left = insert_in_binary_search_tree(root->left, passed_data);
+        }
+        else if (passed_data > root->data) {
+            root->right = insert_in_binary_search_tree(root->right, passed_data);
+        }
+        return root;
+    }
+}
+
+node* delete_leaf_node(node* root, int data_passed) {
+    if (root->data == data_passed) {
+        cout << root->data;
+        root = NULL;
+        return root;
+    }
+
+    else {
+        if (data_passed < root->data) {
+            root->left = delete_leaf_node(root->left, data_passed);
+        }
+        else if (data_passed > root->data) {
+            root->right = delete_leaf_node(root->right, data_passed);
+        }
+        return root;
+    }
+}
+
+void display(node* root) {
+    if (root == NULL) {
+        cout << "";
+    }
+    else {
+
+        cout << root->data << "\t";
+        display(root->left);
+        display(root->right);
+    }
+}
+
+int main() {
+    cout << "Binary Search Tree" << endl;
+    node* root = new node();
+    root->data = 7;
+    root->left = NULL;
+    root->right = NULL;
+    int opt;
+    while (1) {
+        cout << "Enter 1 to insert in binary search tree" << endl;
+        cout << "Enter 2 to display" << endl;
+        cout << "Enter 3 to delete leaf node" << endl;
+        cin >> opt;
+        cout << endl;
+        switch (opt) {
+        case 1:
+        {
+            int data;
+            cout << "Enter the data : ";
+            cin >> data;
+            cout << endl;
+            insert_in_binary_search_tree(root, data);
+            break;
+        }
+        case 2:
+        {
+            display(root);
+            cout << endl;
+            break;
+        }
+        case 3:
+        {
+            delete_leaf_node(root, 3);
+            break;
+        }
+        }
+    }
+}
+
+//deletion in between
+//Leaf Deletion
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+    node* left;
+    node* right;
+    int data;
+};
+
+node* create_node(int passed_data) {
+    node* newnode = new node;
+    newnode->data = passed_data;
+    return newnode;
+}
+
+node* insert_in_binary_search_tree(node* root, int passed_data) {
+    if (root == NULL) {
+        root = create_node(passed_data);
+        root->left = NULL;
+        root->right = NULL;
+        return root;
+    }
+
+    else {
+        if (passed_data < root->data) {
+            root->left = insert_in_binary_search_tree(root->left, passed_data);
+        }
+        else if (passed_data > root->data) {
+            root->right = insert_in_binary_search_tree(root->right, passed_data);
+        }
+        return root;
+    }
+}
+
+node* delete_leaf_node(node* root, int data_passed) {
+    if (root->data == data_passed) {
+        if(root->left!=NULL){
+
+            node *temp = root->right;
+            root = root->left;
+            root->right = temp;
+            return root;
+        }
+        else if(root->left==NULL&&root->right==NULL){
+            
+        root = NULL;
+        return root;
+        }
+
+        else if(root->left==NULL){
+        root = root->right;
+        return root;
+        }
+        else if(root->right == NULL){
+            
+        root = root->left;
+        return root;
+        }
+    }
+
+    else {
+        if (data_passed < root->data) {
+            root->left = delete_leaf_node(root->left, data_passed);
+        }
+        else if (data_passed > root->data) {
+            root->right = delete_leaf_node(root->right, data_passed);
+        }
+        return root;
+    }
+}
+
+void display(node* root) {
+    if (root == NULL) {
+        cout << "";
+    }
+    else {
+
+        cout << root->data << "\t";
+        display(root->left);
+        display(root->right);
+    }
+}
+
+int main() {
+    cout << "Binary Search Tree" << endl;
+    node* root = new node();
+    root->data = 50;
+    root->left = NULL;
+    root->right = NULL;
+    int opt;
+    while (1) {
+        cout << "Enter 1 to insert in binary search tree" << endl;
+        cout << "Enter 2 to display" << endl;
+        cout << "Enter 3 to delete leaf node" << endl;
+        cin >> opt;
+        cout << endl;
+        switch (opt) {
+        case 1:
+        {
+            int data;
+            cout << "Enter the data : ";
+            cin >> data;
+            cout << endl;
+            insert_in_binary_search_tree(root, data);
+            break;
+        }
+        case 2:
+        {
+            display(root);
+            cout << endl;
+            break;
+        }
+        case 3:
+        {
+            delete_leaf_node(root, 30);
+            break;
+        }
+        }
+    }
+}

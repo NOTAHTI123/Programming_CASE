@@ -1,0 +1,240 @@
+/*
+There is a garage where the access road can accommodate any number of trucks at one time. The garage is build
+such a way that only the last truck entered can be moved out. Each of the trucks is identified by a positive integer
+(a truck_id). Write a program to handle truck moves, allowing for the following commands:
+
+a) On_road (truck_id);
+
+b) Enter_garage (truck_ id);
+
+c) Exit_garage (truck_id);
+
+d) Show_trucks (garage or road);
+
+If an attempt is made to get out a truck which is not the closest to the garage entry, the error message Truck x not
+near garage door.
+*/
+#include <iostream>
+using namespace std;
+
+class node
+{
+public:
+	node* next;
+	node* head = NULL;
+	int id;
+	static int count;
+};
+
+int node::count = 0;
+
+class road : public node
+{
+public:
+
+	node* create_node()
+	{
+		node* newnode = new node;
+		return newnode;
+	}
+
+	int last_node() {
+		node* temp = head;
+		while (temp->next != NULL) {
+			temp = temp->next;
+		}
+		return temp->id;
+	}
+
+	void read_data(node& newnode)
+	{
+		cout << "Enter the Truck ID : ";
+		cin >> newnode.id;
+		cout << endl;
+	}
+
+	void insert_at_head()
+	{
+		node* newnode = create_node();
+		read_data(*newnode);
+
+		if (head == NULL) {
+			head = newnode;
+			head->next = NULL;
+		}
+
+		else {
+			newnode->next = head;
+			head = newnode;
+		}
+		count++;
+	}
+
+	void display() {
+		node* temp = head;
+		if (head == NULL) {
+			cout << "The road is empty" << endl;
+		}
+		else {
+			while (temp != NULL) {
+				cout << temp->id << "\n"
+					<< endl;
+				temp = temp->next;
+			}
+		}
+	}
+
+	void remove_from_road() {
+		if (count == 1) {
+			node* temp = head;
+			head = NULL;
+			delete (temp);
+		}
+		else if (count == 2) {
+			node* temp = head->next;
+			head->next = NULL;
+			delete (temp);
+		}
+		else {
+			node* temp = head;
+			while (temp->next->next != NULL) {
+				temp = temp->next;
+			}
+			node* temp_del = temp;
+			temp->next = NULL;
+			//delete (temp_del);
+		}
+
+		count--;
+	}
+};
+
+class garage : public node
+{
+public:
+	static int top;
+
+	int arr[10];
+
+	bool is_empty()
+	{
+		if (top == 0)
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	void insert_in_garage(int id_passed) {
+		if (is_empty()) {
+			arr[top] = id_passed;
+			top++;
+		}
+		else {
+			if (top < 10) {
+				arr[top] = id_passed;
+				top++;
+			}
+			else {
+				cout << "Garage is full" << endl;
+			}
+		}
+	}
+
+	void display() {
+		if (top == 0) {
+			cout << "The garage is empty" << endl;
+		}
+		else {
+			for (int i = top - 1; i >= 0; i--) {
+				cout << arr[i] << "\t";
+			}
+			cout << endl;
+		}
+	}
+
+	void exit_garage(int id_passed) {
+		if (top == 0) {
+			cout << "The garage is empty" << endl;
+		}
+		else {
+			if (arr[top-1] == id_passed) {
+				cout << "PROCESSING" << endl;
+				//system("CLS");
+				top--;
+				cout << "Success" << endl;
+			}
+			else {
+				cout << "The id you have entered is not infront of the gate" << endl;
+			}
+		}
+	}
+
+
+};
+
+int garage::top = 0;
+
+int main()
+{
+	road r;
+	garage g;
+	int option;
+	while (1) {
+		cout << "Enter 1 add a truck to the road" << endl;
+		cout << "Enter 2 to add a truck to the garage" << endl;
+		cout << "Enter 3 to display the trucks on the road" << endl;
+		cout << "Enter 4 to display trucks in the garage" << endl;
+		cout << "Enter 5 to exit a truck from the garage" << endl;
+		cin >> option;
+		cout << endl;
+
+		switch (option) {
+		case 1:
+		{
+			//system("CLS");
+			r.insert_at_head();
+			break;
+		}
+
+		case 2:
+		{
+			//system("CLS");
+			if(r.head!=NULL){
+				int id_passed = r.last_node();
+				g.insert_in_garage(id_passed);
+				r.remove_from_road();
+			}
+			else {
+				cout << "The road is empty" << endl;
+			}
+			break;
+		}
+
+		case 3:
+		{
+			//system("CLS");
+			r.display();
+			break;
+		}
+
+		case 4:
+		{
+			//system("CLS");
+			g.display();
+			break;
+		}
+
+		case 5:
+		{
+			//system("CLS");
+			int id_passed;
+			cout << "Enter the truck id you want to exit : "; cin >> id_passed; cout << endl;
+			g.exit_garage(id_passed);
+			break;
+		}
+		}
+	}
+}

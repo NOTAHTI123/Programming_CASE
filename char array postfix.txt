@@ -1,0 +1,100 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node* next;
+};
+
+node* top = NULL;
+
+node* create_node() {
+	node* newnode = new node;
+	return newnode;
+}
+
+void push(int s) {
+	node* newnode = create_node();
+	newnode->data = s;
+	if (top == NULL) {
+		top = newnode;
+		top->next = NULL;
+	}
+	else {
+		newnode->next = top;
+		top = newnode;
+	}
+}
+
+char pop() {
+	node* temp = top;
+	char character1 = temp->data;
+	top = top->next;
+	return character1;
+	delete(temp);
+}
+
+void check(char character1, char character2) {
+	int count = 0;
+	node* temp = top;
+	while (temp != NULL) {
+		count++;
+		temp = temp->next;
+	}
+	int cnt = 0;
+
+}
+
+void stack_implement(char str[]) {
+	int i = 0;
+	while (str[i] != '\0') {
+		if (str[i] == '*') {
+			node* first = top->next;
+			node* second = top;
+			int first_ = first->data;
+			int second_ = second->data;
+			int ans = first->data * second->data;
+			pop(); pop();
+			push(ans);
+		}
+		else if (str[i] == '/') {
+			node* first = top->next;
+			node* second = top;
+			int first_ = first->data;
+			int second_ = second->data;
+			int ans = first->data / second->data;
+			pop(); pop();
+			push(ans);
+		}
+		else if(str[i] == '+') {
+			node* first = top->next;
+			node* second = top;
+			int first_ = first->data;
+			int second_ = second->data;
+			int ans = first_ + second_;
+			pop(); pop();
+			push(ans);
+		}
+		else if (str[i] == '-') {
+			node* first = top->next;
+			node* second = top;
+			int first_ = first->data;
+			int second_ = second->data;
+			int ans = first->data - second->data;
+			pop(); pop();
+			push(ans);
+		}
+		else {
+			push(str[i]-48);
+		}
+		i++;
+	}
+}
+
+int main() {
+	char str[50] = "84+342-*/8*741+-*";
+	stack_implement(str);
+	cout << "FINAL ANSWER IS : " << top->data;
+}

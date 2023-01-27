@@ -1,0 +1,102 @@
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node* next;
+};
+
+node* top = NULL;
+
+node* create_node() {
+	node* newnode = new node;
+	return newnode;
+}
+
+bool is_empty_() {
+	if (top == NULL) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+char pop() {
+	node* temp = top;
+	char character1 = temp->data;
+
+	top = top->next;
+	return character1;
+
+	delete(temp);
+}
+
+void push(char s) {
+	node* newnode = create_node();
+	newnode->data = s;
+	if (is_empty_()) {
+		top = newnode;
+		top->next = NULL;
+	}
+	else {
+		newnode->next = top;
+		top = newnode;
+	}
+}
+
+bool check_balanced(char character1, char character2) {
+	if (character1 == '(' && character2 == ')') {
+		return 1;
+	}
+	else if (character1 == '[' && character2 == ']') {
+		return 1;
+	}
+	else if (character1 == '{' && character2 == '}') {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+bool isexpressionbalanced(char str[]) {
+	int i = 0;
+	while (str[i] != '\0') {
+		if (str[i] == '(' || str[i] == '[' || str[i] == '{') {
+			push(str[i]);
+		}
+		else if (str[i] == ')' || str[i] == ']' || str[i] == '}') {
+			if (is_empty_()) {
+				return 0;
+			}
+			else if(!is_empty_()) {
+				if (check_balanced(pop(), str[i])) {
+					return 1;
+				}
+				else {
+					return 0;
+				}
+			}
+		}
+		i++;
+	}
+	if (is_empty_()) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+int main() {
+	char str[10] = "king[0]";
+
+	if (isexpressionbalanced(str)) {
+		cout << "THE EXPRESSION IS BALANCED" << endl;
+	}
+	else {
+		cout << "THE EXPRESSION IS UNBALANCED" << endl;
+	}
+}

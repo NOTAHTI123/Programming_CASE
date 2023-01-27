@@ -1,0 +1,28 @@
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+bool check_if_palindrome(char arr[], int length){
+    int sec = length-1;
+    for(int i = 0;i<length;i++){
+        if(arr[i] != arr[sec]){
+            return 0;
+            break;
+        }
+        else{
+            sec--;
+            return 1;
+        }
+    }
+}
+
+int main(){
+    char str[10] = "racecar";
+    int length = strlen(str);
+    if(check_if_palindrome(str, length)){
+        cout<<"PALINDROME";
+    }
+    else{
+        cout<<"NOT A PALINDROME";
+    }
+}

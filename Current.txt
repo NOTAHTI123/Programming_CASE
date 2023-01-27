@@ -1,0 +1,180 @@
+//push done
+//pop done
+//initial push done
+
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+	node* next;
+	int data;
+
+
+};
+
+node* top_final;
+node* top_1; //temp
+node* top_2; //temp
+
+node* create_node() {
+	node* newnode = new node;
+	return newnode;
+}
+
+void push_top_1(int i) {
+	node* newnode = create_node();
+	newnode->data = i;
+	if (top_1 == NULL) {
+		top_1 = newnode;
+		top_1->next = NULL;
+	}
+	else {
+		newnode->next = top_1;
+		top_1 = newnode;
+	}
+}
+
+void push_top_2(int i) {
+	node* newnode = create_node();
+	newnode->data = i;
+	if (top_2 == NULL) {
+		top_2 = newnode;
+		top_2->next = NULL;
+	}
+	else {
+		newnode->next = top_2;
+		top_2 = newnode;
+	}
+}
+
+void push_top_final(int i) {
+	node* newnode = create_node();
+	newnode->data = i;
+	if (top_final == NULL) {
+		top_final = newnode;
+		top_final->next = NULL;
+	}
+	else {
+		newnode->next = top_final;
+		top_final = newnode;
+	}
+}
+
+void pop_top_1() {
+	if (top_1 == NULL) {
+		cout << "" << endl;
+	}
+	else {
+		node* temp_top_1 = top_1;
+		top_1 = top_1->next;
+		delete(temp_top_1);
+	}
+}
+
+void pop_top_2() {
+	if (top_2 == NULL) {
+		cout << "" << endl;
+	}
+	else {
+		node* temp_top_2 = top_2;
+		top_2 = top_2->next;
+		delete(temp_top_2);
+	}
+}
+
+void ascend() {
+	//temp stack no 1
+	if (top_1 == NULL) {
+		node* temp_top_2 = top_2;
+		node* min_node = top_2;
+		int min_data_2 = top_2->data;
+		while (temp_top_2 != NULL) {
+
+			if (min_data_2 > temp_top_2->data) {
+				min_data_2 = temp_top_2->data;
+				min_node = temp_top_2;
+
+				temp_top_2 = temp_top_2->next;
+			}
+			else {
+				temp_top_2 = temp_top_2->next;
+			}
+		}
+		push_top_final(min_data_2); //pushes min value to final
+
+		node* temp_top = top_2;
+
+		while (temp_top != NULL) {
+			if (temp_top == min_node) {
+				pop_top_2();
+				temp_top = temp_top->next;
+			}
+			else{
+				push_top_1(temp_top->data);
+				pop_top_2();
+
+				temp_top = temp_top->next;
+			}
+		}
+	}
+	//temp stack no 2
+	else if (top_2 == NULL) {
+		node* temp_top_1 = top_1;
+		node* min_node = top_1;
+		int min_data_1 = top_1->data;
+		while (temp_top_1 != NULL) {
+
+			if (min_data_1 > temp_top_1->data) {
+				min_data_1 = temp_top_1->data;
+				min_node = temp_top_1;
+			}
+			else {
+				temp_top_1 = temp_top_1->next;
+			}
+		}
+
+		push_top_final(min_data_1); //pushes min value to final
+
+		node* temp_top = top_1;
+
+		while (temp_top != NULL) {
+			if (temp_top == min_node) {
+				pop_top_1();
+				temp_top = temp_top->next;
+			}
+			else {
+				push_top_2(temp_top->data);
+				pop_top_1();
+
+				temp_top = temp_top->next;
+			}
+		}
+	}
+}
+
+void display_final() {
+	node* temp_final = top_final;
+	while (temp_final != NULL) {
+		cout << temp_final->data << endl;
+		temp_final = temp_final->next;
+	}
+}
+
+int main() {
+	//initial values
+	push_top_1(1);
+	push_top_1(5);
+	push_top_1(2);
+	push_top_1(8);
+	push_top_1(9);
+	//ascend
+	ascend();
+
+	//display
+	cout << top_2->data;
+	cout << top_1->data;
+	cout << top_final->data;
+	//display_final();
+	
+}

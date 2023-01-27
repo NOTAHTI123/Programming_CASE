@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+
+int find_number(int arr[], int size, int n){
+    if(size<0){
+        cout << "Not Found" << endl;
+        return 0;
+    }
+    else if(arr[size]==n){
+        cout << "Found at Index" << endl;
+        return size;
+    }
+    else{
+        size--;
+        return find_number(arr, size, n);
+    }
+}
+
+int main(){
+    int n;
+    int arr[5] = {1, 2, 3, 4, 5};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    cout << "Enter the number : ";
+    cin >> n;
+    cout << endl;
+    cout << find_number(arr, size-1, n) << endl;
+}

@@ -1,0 +1,89 @@
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+	node* next;
+	int roll;
+};
+
+node* head = NULL;
+
+class list {
+public:
+	node* create_node() {
+		node* newnode = new node;
+		return newnode;
+	}
+
+	void read_data(node* newnode) {
+		cout << "ENTER THE ROLL NO : "; cin >> newnode->roll; cout << endl;
+	}
+	
+	void push(node* newnode) {
+		if (head == NULL) {
+			head = newnode;
+			head->next = NULL;
+		}
+		else {
+			newnode->next = head;
+			head = newnode;
+		}
+	}
+
+	void pop() {
+		if (head == NULL) {
+			cout << "THE LIST IS EMPTY" << endl;
+		}
+		else {
+			node* temp = head;
+			head = head->next;
+			delete(temp);
+		}
+	}
+
+	void display() {
+		if (head == NULL) {
+			cout << "THE LIST IS EMPTY" << endl;
+		}
+		else {
+			node* temp = head;
+			while (temp != NULL) {
+				cout << temp->roll; cout << endl;
+				temp = temp->next;
+			}
+		}
+	}
+};
+
+int main() {
+	int opt; list l;
+	while (1) {
+		cout << "ENTER 1 TO PUSH" << endl;
+		cout << "ENTER 2 TO POP" << endl;
+		cout << "ENTER 3 TO DISPLAY" << endl;
+		cin >> opt; cout << endl;
+		switch (opt) {
+		case 1:
+		{
+			node* newnode = l.create_node();
+			l.read_data(newnode);
+			l.push(newnode);
+			break;
+		}
+
+		case 2:
+		{
+			l.pop();
+			break;
+		}
+
+		case 3:
+		{
+			l.display();
+			break;
+		}
+		}
+	}
+}
+

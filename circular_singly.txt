@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+	node* next;
+	node* prev;
+	int roll;
+};
+
+node* head = NULL;
+
+class list {
+public:
+
+	node* create_node() {
+		node* newnode = new node;
+		return newnode;
+	}
+
+	void read_data(node* newnode) {
+		cout << "ENTER THE ROLL NO : "; cin >> newnode->roll; cout << endl;
+	}
+
+	node* last_node() {
+		if (head == NULL) {
+			cout << "THE LIST IS EMPTY" << endl;
+		}
+		else {
+			node* temp = head;
+			while (temp->next != head) {
+				temp = temp->next;
+			}
+			return temp;
+		}
+	}
+
+	void insert_at_head(node* newnode) {
+		node* last;
+		if (head == NULL) {
+			head = newnode;
+			last = newnode;
+			head->next = last;
+			last->next = head;
+		}
+		else {
+			last = last_node();
+			newnode->next = head;
+			head = newnode;
+			head->prev = last;
+			last->next = head;
+		}
+	}
+
+	void display() {
+		if (head == NULL) {
+			cout << "THE LIST IS EMPTY" << endl;
+		}
+		else {
+			node* temp = head;
+			while (temp->next != head) {
+				cout << temp->roll << endl;
+				temp = temp->next;
+			}
+			cout << temp->roll << endl;
+		}
+	}
+};
+
+int main() {
+	int opt;
+	list l;
+	while (1) {
+		cout << "ENTER 1 TO INPUT AT HEAD" << endl;
+		cout << "ENTER 3 TO DISPLAY" << endl;
+		cin >> opt; system("CLS");
+		switch (opt) {
+		case 1:
+		{
+			node* newnode = l.create_node();
+			l.read_data(newnode);
+			l.insert_at_head(newnode);
+			break;
+		}
+
+		case 3:
+		{
+			l.display();
+			break;
+		}
+
+		}
+	}
+}

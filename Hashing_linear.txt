@@ -1,0 +1,114 @@
+//hash tables
+
+#include <iostream>
+using namespace std;
+
+int search(int arr[], int num_search, int size){
+    int i = 0;
+    while(i<size){
+        if(arr[i] == num_search){
+            cout << "The number is found at index : " << i << endl;
+            return i;
+            break;
+        }
+        else{
+            i++;
+        }
+    }
+    if(arr[i]!=num_search){
+        cout << "Number not found" << endl;
+    }
+}
+
+void delete_number(int arr[], int index){
+    arr[index] = -1;
+}
+
+int main() {
+    int arr[20];
+    for (int i = 0; i < 20; i++) {
+        arr[i] = -1;
+    }
+
+    int num;
+    cout << endl;
+    int collision_number = 0;
+
+    int opt;
+
+    while (1) {
+        cout << endl;
+        cout << "Enter 1 to input" << endl;
+        cout << "Enter 2 to display" << endl;
+        cout << "Enter 3 to search a number" << endl;
+        cout << "Enter 4 to delete a number" << endl;
+        cin >> opt;
+        cout << endl;
+        switch (opt) {
+        case 1:
+        {
+            cout << "Enter the number : ";
+            cin >> num;
+            cout << endl;
+            int temp = num % 20;
+            int collision_number = 0;
+            if (arr[temp] == -1) {
+                arr[temp] = num;
+            }
+            else {
+                int i = 0;
+                while(i<20)
+                {
+                    temp = num % 20;
+                    collision_number++;
+                    temp = (temp + collision_number) % 20;
+                    if (arr[temp] == -1) {
+                        arr[temp] = num;
+                        break;
+                    }
+                    else{
+                        i++;
+                    }
+                }
+            }
+            break;
+        }
+
+        case 2:
+        {
+            int i = 0;
+            while (i <= 19) {
+                cout << arr[i] << "\t";
+                i++;
+            }
+            i = 0;
+            break;
+        }
+
+        case 3:
+        {
+            int num_search;
+            cout << "Enter the number you want to search : ";
+            cin >> num_search;
+            cout << endl;
+            int size = sizeof(arr) / sizeof(arr[0]);
+            search(arr, num_search, size-1);
+            break;
+        }
+
+        case 4:
+        {
+            int num_search;
+            cout << "Enter the number you want to delete : ";
+            cin >> num_search;
+            cout << endl;
+            int size = sizeof(arr) / sizeof(arr[0]);
+            int index = search(arr, num_search, size-1);
+            delete_number(arr, index);
+            break;
+        }
+
+        }
+    }
+
+}

@@ -1,0 +1,122 @@
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+	node* next;
+	node* prev;
+	int roll;
+};
+
+node* head = NULL;
+
+class list {
+public:
+
+	node* create_node() {
+		node* newnode = new node;
+		return newnode;
+	}
+
+	void read_data(node* newnode) {
+		cout << "ENTER THE ROLL NO : "; cin >> newnode->roll;
+	}
+
+	void insert_at_head(node* newnode) {
+		if (head == NULL) {
+			head = newnode;
+			head->next = NULL;
+		}
+		else {
+			ascend(newnode);
+		}
+	}
+
+	node* last_node() {
+		if (head == NULL) {
+			cout << "LIST IS EMPTY" << endl;
+		}
+		else {
+			node* temp = head;
+			while (temp->next != NULL) {
+				temp = temp->next;
+			}
+			node* last = temp;
+			return last;
+		}
+	}
+
+	void ascend(node* newnode) {
+		node* last = last_node();
+		if (newnode->roll > last->roll) {
+			last->next = newnode;
+			newnode->prev = last;
+			newnode->next = NULL;
+			last = newnode;
+		}
+
+		else if (newnode->roll < head->roll) {
+			newnode->next = head;
+			head->prev = newnode;
+			head = newnode;
+		}
+
+		else {
+			node* temp = head->next;
+			node* prev_node = head;
+			while (temp != NULL) {
+				if (newnode->roll < temp->roll) {
+					prev_node->next = newnode;
+					newnode->prev = prev_node;
+					newnode->next = temp;
+					temp->prev = newnode;
+					temp = temp->next;
+					prev_node = prev_node->next;
+				}
+				else {
+					temp = temp->next;
+					prev_node = prev_node->next;
+				}
+			}
+		}
+	}
+
+	void display() {
+		if (head == NULL) {
+			cout << "NOTHING TO DISPLAY" << endl;
+		}
+		else {
+			node* temp = head;
+			while (temp != NULL) {
+				cout << temp->roll << endl;
+				temp = temp->next;
+			}
+		}
+	}
+};
+
+int main() {
+	int opt;
+	list l;
+	while (1) {
+		cout << "ENTER 1 TO INPUT AT HEAD" << endl;
+		cout << "ENTER 3 TO DISPLAY" << endl;
+		cin >> opt; system("CLS");
+		switch (opt) {
+		case 1:
+		{
+			node* newnode = l.create_node();
+			l.read_data(newnode);
+			l.insert_at_head(newnode);
+			break;
+		}
+
+		case 3:
+		{
+			l.display();
+			break;
+		}
+
+		}
+	}
+}

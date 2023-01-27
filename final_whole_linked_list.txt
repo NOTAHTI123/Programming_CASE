@@ -1,0 +1,1112 @@
+#include <iostream>
+using namespace std;
+
+class node
+{
+public:
+    node* next;
+    node* prev;
+    int data;
+};
+
+node* head = NULL;
+
+class singly_linked_list : public node
+{
+public:
+    int count = 0;
+    node* create_node()
+    {
+        node* newnode = new node;
+        cout << "Enter the data : ";
+        cin >> newnode->data;
+        cout << endl;
+        return newnode;
+    }
+
+    void insert_at_head()
+    {
+        node* newnode = create_node();
+
+        if (head == NULL)
+        {
+            head = newnode;
+            head->next = NULL;
+            count++;
+        }
+        else
+        {
+            newnode->next = head;
+            head = newnode;
+            count++;
+        }
+    }
+
+    void insert_at_end()
+    {
+        node* newnode = create_node();
+
+        if (head == NULL)
+        {
+            head = newnode;
+            head->next = NULL;
+            count++;
+        }
+
+        else
+        {
+            node* temp = head;
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            temp->next = newnode;
+            newnode->next = NULL;
+            count++;
+        }
+    }
+
+    void insert_at_data(int data_passed)
+    {
+
+        if (head == NULL)
+        {
+            cout << "The List is Empty" << endl;
+        }
+
+        else
+        {
+            node* temp = head;
+            while (temp != NULL)
+            {
+                if (temp->data = data_passed)
+                {
+                    node* newnode = create_node();
+                    node* temp_next = temp->next;
+                    temp->next = newnode;
+                    newnode->next = temp_next;
+                    count++;
+                }
+                else
+                {
+                    temp = temp->next;
+                }
+            }
+        }
+    }
+
+    void delete_at_head()
+    {
+        if (head == NULL)
+        {
+            cout << "The List is Empty" << endl;
+        }
+        else
+        {
+            cout << "Data : " << head->data << " _ Has been deleted" << endl;
+            head = head->next;
+            count--;
+        }
+    }
+
+    void delete_at_end()
+    {
+        if (head == NULL)
+        {
+            cout << "The List is Empty" << endl;
+        }
+        else
+        {
+
+            node* temp = head;
+            node* temp_prev = NULL;
+            while (temp->next != NULL)
+            {
+                temp_prev = temp;
+                temp = temp->next;
+            }
+            cout << "Data : " << temp->data << " _ Has been deleted" << endl;
+            temp_prev->next = NULL;
+            count--;
+        }
+    }
+
+    void delete_at_data(int data_passed)
+    {
+        if (head == NULL)
+        {
+            cout << "The list is empty" << endl;
+        }
+        else
+        {
+            if (head->data == data_passed)
+            {
+                cout << "The data : " << data_passed << "_ has been deleted";
+                head = head->next;
+            }
+            else
+            {
+                node* temp_prev = head;
+                node* temp = head->next;
+                while (temp != NULL)
+                {
+                    if (temp->data == data_passed)
+                    {
+                        cout << "The data : " << data_passed << "_ has been deleted";
+                        temp_prev->next = temp->next;
+                        count--;
+                    }
+                    else
+                    {
+                        temp = temp->next;
+                        temp_prev = temp_prev->next;
+                    }
+                }
+            }
+        }
+    }
+
+    node* find_last()
+    {
+        node* temp = head;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        return temp;
+    }
+
+    void sort_at_insertion()
+    {
+        node* newnode = create_node();
+        if (head == NULL)
+        {
+            head = newnode;
+            head->next = NULL;
+        }
+        else
+        {
+            node* last_node = find_last();
+            if (newnode->data < head->data)
+            {
+                node* temp = head;
+                head = newnode;
+                head->next = temp;
+            }
+
+            else if (newnode->data > last_node->data)
+            {
+                last_node->next = newnode;
+                newnode->next = NULL;
+            }
+
+            else
+            {
+                node* temp_prev = head;
+                node* temp = head->next;
+                while (temp != NULL)
+                {
+                    if (newnode->data < temp->data)
+                    {
+                        temp_prev->next = newnode;
+                        newnode->next = temp;
+                    }
+                    else
+                    {
+                        temp = temp->next;
+                        temp_prev = temp_prev->next;
+                    }
+                }
+            }
+        }
+    }
+
+    void swap(node* first, node* second) {
+        int temp = first->data;
+        first->data = second->data;
+        second->data = temp;
+    }
+
+    void custom_sort() {
+        if (head == NULL) {
+            cout << "The list is empty" << endl;
+        }
+        else {
+            if (head->data > head->next->data) {
+                swap(head, head->next);
+            }
+            else {
+                node* temp_prev = head;
+                node* temp = head->next;
+                while (temp != NULL) {
+                    if (temp_prev->data > temp->data) {
+                        swap(temp_prev, temp);
+                    }
+                    else {
+                        temp = temp->next;
+                        temp_prev = temp_prev->next;
+                    }
+                }
+            }
+        }
+    }
+
+    bool find_data(int data_passed) {
+        if (head == NULL) {
+            cout << "The list is empty" << endl;
+        }
+        else {
+            node* temp = head;
+            while (temp != NULL) {
+                if (temp->data == data_passed) {
+                    cout << "The data is found" << endl;
+                    return true;
+                    break;
+                }
+                else {
+                    temp = temp->next;
+                    return false;
+                }
+            }
+        }
+    }
+
+    void display_singly() {
+        if (head == NULL) {
+            cout << "The list is empty" << endl;
+        }
+        else {
+            node* temp = head;
+            while (temp != NULL) {
+                cout << temp->data << endl;
+                temp = temp->next;
+            }
+        }
+    }
+};
+
+
+//doubly
+////////
+class doubly_linked_list : public node
+{
+public:
+    int count = 0;
+    node* create_node()
+    {
+        node* newnode = new node;
+        cout << "Enter the data : ";
+        cin >> newnode->data;
+        cout << endl;
+        return newnode;
+    }
+
+    void insert_at_head()
+    {
+        node* newnode = create_node();
+
+        if (head == NULL)
+        {
+            head = newnode;
+            head->next = NULL;
+            count++;
+        }
+        else
+        {
+            newnode->next = head;
+            head->prev = newnode;
+            head = newnode;
+            count++;
+        }
+    }
+
+    void insert_at_end()
+    {
+        node* newnode = create_node();
+
+        if (head == NULL)
+        {
+            head = newnode;
+            head->next = NULL;
+            count++;
+        }
+
+        else
+        {
+            node* temp = head;
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            temp->next = newnode;
+            newnode->prev = temp;
+            newnode->next = NULL;
+            count++;
+        }
+    }
+
+    void insert_at_data(int data_passed)
+    {
+
+        if (head == NULL)
+        {
+            cout << "The List is Empty" << endl;
+        }
+
+        else
+        {
+            node* temp = head;
+            while (temp != NULL)
+            {
+                if (temp->data = data_passed)
+                {
+                    node* newnode = create_node();
+                    node* temp_next = temp->next;
+                    temp->next = newnode;
+                    newnode->prev = temp;
+                    newnode->next = temp_next;
+                    temp_next->prev = newnode;
+                    count++;
+                }
+                else
+                {
+                    temp = temp->next;
+                }
+            }
+        }
+    }
+
+    void delete_at_head()
+    {
+        if (head == NULL)
+        {
+            cout << "The List is Empty" << endl;
+        }
+        else
+        {
+            cout << "Data : " << head->data << " _ Has been deleted" << endl;
+            head = head->next;
+            count--;
+        }
+    }
+
+    void delete_at_end()
+    {
+        if (head == NULL)
+        {
+            cout << "The List is Empty" << endl;
+        }
+        else
+        {
+
+            node* temp = head;
+            node* temp_prev = NULL;
+            while (temp->next != NULL)
+            {
+                temp_prev = temp;
+                temp = temp->next;
+            }
+            cout << "Data : " << temp->data << " _ Has been deleted" << endl;
+            temp_prev->next = NULL;
+            count--;
+        }
+    }
+
+    void delete_at_data(int data_passed)
+    {
+        if (head == NULL)
+        {
+            cout << "The list is empty" << endl;
+        }
+        else
+        {
+            if (head->data == data_passed)
+            {
+                cout << "The data : " << data_passed << "_ has been deleted";
+                head = head->next;
+            }
+            else
+            {
+                node* temp_prev = head;
+                node* temp = head->next;
+                while (temp != NULL)
+                {
+                    if (temp->data == data_passed)
+                    {
+                        cout << "The data : " << data_passed << "_ has been deleted";
+                        temp_prev->next = temp->next;
+                        temp->next->prev = temp_prev;
+                        count--;
+                    }
+                    else
+                    {
+                        temp = temp->next;
+                        temp_prev = temp_prev->next;
+                    }
+                }
+            }
+        }
+    }
+
+    node* find_last()
+    {
+        node* temp = head;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        return temp;
+    }
+
+    void sort_at_insertion()
+    {
+        node* newnode = create_node();
+        if (head == NULL)
+        {
+            head = newnode;
+            head->next = NULL;
+        }
+        else
+        {
+            node* last_node = find_last();
+            if (newnode->data < head->data)
+            {
+                node* temp = head;
+                head = newnode;
+                head->next = temp;
+                temp->prev = head;
+            }
+
+            else if (newnode->data > last_node->data)
+            {
+                last_node->next = newnode;
+                newnode->prev = last_node;
+                newnode->next = NULL;
+            }
+
+            else
+            {
+                node* temp_prev = head;
+                node* temp = head->next;
+                while (temp != NULL)
+                {
+                    if (newnode->data < temp->data)
+                    {
+                        temp_prev->next = newnode;
+                        newnode->next = temp;
+                        temp->prev = newnode;
+                    }
+                    else
+                    {
+                        temp = temp->next;
+                        temp_prev = temp_prev->next;
+                    }
+                }
+            }
+        }
+    }
+
+    void swap(node* first, node* second) {
+        int temp = first->data;
+        first->data = second->data;
+        second->data = temp;
+    }
+
+    void custom_sort() {
+        if (head == NULL) {
+            cout << "The list is empty" << endl;
+        }
+        else {
+            if (head->data > head->next->data) {
+                swap(head, head->next);
+            }
+            else {
+                node* temp_prev = head;
+                node* temp = head->next;
+                while (temp != NULL) {
+                    if (temp_prev->data > temp->data) {
+                        swap(temp_prev, temp);
+                    }
+                    else {
+                        temp = temp->next;
+                        temp_prev = temp_prev->next;
+                    }
+                }
+            }
+        }
+    }
+
+    bool find_data(int data_passed) {
+        if (head == NULL) {
+            cout << "The list is empty" << endl;
+        }
+        else {
+            node* temp = head;
+            while (temp != NULL) {
+                if (temp->data == data_passed) {
+                    cout << "The data is found" << endl;
+                    return true;
+                    break;
+                }
+                else {
+                    temp = temp->next;
+                    return false;
+                }
+            }
+        }
+    }
+
+    void display_doubly() {
+        if (head == NULL) {
+            cout << "The list is empty" << endl;
+        }
+        else {
+            node* temp = head;
+            while (temp != NULL) {
+                cout << temp->data << endl;
+                temp = temp->next;
+            }
+        }
+    }
+};
+
+//Circular Doubly
+////////
+class circular_linked_list_doubly : public node
+{
+public:
+    int count = 0;
+    node* create_node()
+    {
+        node* newnode = new node;
+        cout << "Enter the data : ";
+        cin >> newnode->data;
+        cout << endl;
+        return newnode;
+    }
+
+    void insert_at_head()
+    {
+        node* newnode = create_node();
+
+        if (head == NULL)
+        {
+            head = newnode;
+            head->next = head;
+            count++;
+        }
+        else
+        {
+            newnode->next = head;
+            head->prev = newnode;
+            head = newnode;
+            count++;
+        }
+    }
+
+    void insert_at_end()
+    {
+        node* newnode = create_node();
+
+        if (head == NULL)
+        {
+            head = newnode;
+            head->next = head;
+            count++;
+        }
+
+        else
+        {
+            node* temp = head;
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            temp->next = newnode;
+            newnode->prev = temp;
+            newnode->next = head;
+            head->prev = newnode;
+            count++;
+        }
+    }
+
+    void insert_at_data(int data_passed)
+    {
+
+        if (head == NULL)
+        {
+            cout << "The List is Empty" << endl;
+        }
+
+        else
+        {
+            node* temp = head;
+            while (temp != NULL)
+            {
+                if (temp->data = data_passed)
+                {
+                    node* newnode = create_node();
+                    node* temp_next = temp->next;
+                    temp->next = newnode;
+                    newnode->prev = temp;
+                    newnode->next = temp_next;
+                    temp_next->prev = newnode;
+                    count++;
+                }
+                else
+                {
+                    temp = temp->next;
+                }
+            }
+        }
+    }
+
+    void delete_at_head()
+    {
+        if (head == NULL)
+        {
+            cout << "The List is Empty" << endl;
+        }
+        else
+        {
+            cout << "Data : " << head->data << " _ Has been deleted" << endl;
+            head = head->next;
+            node* last_node = find_last();
+            last_node->next = head;
+            head->prev = last_node;
+            count--;
+        }
+    }
+
+    void delete_at_end()
+    {
+        if (head == NULL)
+        {
+            cout << "The List is Empty" << endl;
+        }
+        else
+        {
+
+            node* temp = head;
+            node* temp_prev = NULL;
+            while (temp->next != NULL)
+            {
+                temp_prev = temp;
+                temp = temp->next;
+            }
+            cout << "Data : " << temp->data << " _ Has been deleted" << endl;
+            temp_prev->next = head;
+            head->prev = temp_prev;
+            count--;
+        }
+    }
+
+    void delete_at_data(int data_passed)
+    {
+        if (head == NULL)
+        {
+            cout << "The list is empty" << endl;
+        }
+        else
+        {
+            if (head->data == data_passed)
+            {
+                cout << "The data : " << data_passed << "_ has been deleted";
+                head = head->next;
+            }
+            else
+            {
+                node* temp_prev = head;
+                node* temp = head->next;
+                while (temp != NULL)
+                {
+                    if (temp->data == data_passed)
+                    {
+                        cout << "The data : " << data_passed << "_ has been deleted";
+                        temp_prev->next = temp->next;
+                        temp->next->prev = temp_prev;
+                        count--;
+                    }
+                    else
+                    {
+                        temp = temp->next;
+                        temp_prev = temp_prev->next;
+                    }
+                }
+            }
+        }
+    }
+
+    node* find_last()
+    {
+        node* temp = head;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        return temp;
+    }
+
+    void sort_at_insertion()
+    {
+        node* newnode = create_node();
+        if (head == NULL)
+        {
+            head = newnode;
+            head->next = NULL;
+        }
+        else
+        {
+            node* last_node = find_last();
+            if (newnode->data < head->data)
+            {
+                node* temp = head;
+                head = newnode;
+                head->next = temp;
+                temp->prev = head;
+                node* last_node = find_last();
+                last_node->next = head;
+                head->prev = last_node;
+            }
+
+            else if (newnode->data > last_node->data)
+            {
+                last_node->next = newnode;
+                newnode->prev = last_node;
+                head->prev = last_node;
+                newnode->next = head;
+            }
+
+            else
+            {
+                node* temp_prev = head;
+                node* temp = head->next;
+                while (temp != NULL)
+                {
+                    if (newnode->data < temp->data)
+                    {
+                        temp_prev->next = newnode;
+                        newnode->next = temp;
+                        temp->prev = newnode;
+                    }
+                    else
+                    {
+                        temp = temp->next;
+                        temp_prev = temp_prev->next;
+                    }
+                }
+            }
+        }
+    }
+
+    void swap(node* first, node* second) {
+        int temp = first->data;
+        first->data = second->data;
+        second->data = temp;
+    }
+
+    void custom_sort() {
+        if (head == NULL) {
+            cout << "The list is empty" << endl;
+        }
+        else {
+            if (head->data > head->next->data) {
+                swap(head, head->next);
+            }
+            else {
+                node* temp_prev = head;
+                node* temp = head->next;
+                while (temp != NULL) {
+                    if (temp_prev->data > temp->data) {
+                        swap(temp_prev, temp);
+                    }
+                    else {
+                        temp = temp->next;
+                        temp_prev = temp_prev->next;
+                    }
+                }
+            }
+        }
+    }
+
+    bool find_data(int data_passed) {
+        if (head == NULL) {
+            cout << "The list is empty" << endl;
+        }
+        else {
+            node* temp = head;
+            while (temp != NULL) {
+                if (temp->data == data_passed) {
+                    cout << "The data is found" << endl;
+                    return true;
+                    break;
+                }
+                else {
+                    temp = temp->next;
+                    return false;
+                }
+            }
+        }
+    }
+
+    void display_circular_doubly() {
+        if (head == NULL) {
+            cout << "The list is empty" << endl;
+        }
+        else {
+            node* temp = head;
+            while (temp != NULL) {
+                cout << temp->data << endl;
+                temp = temp->next;
+            }
+        }
+    }
+};
+
+int main() {
+    cout << "LINKED LIST [By Ahtisham]" << endl;
+
+    singly_linked_list sl;
+    doubly_linked_list dl;
+    circular_linked_list_doubly cdl;
+
+    int opt_1, opt_2;
+    while (1) {
+        cout << "Enter 1 to use singly linked list" << endl;
+        cout << "Enter 2 to use doubly linked list" << endl;
+        cout << "Enter 3 to use circular linked list [singly]" << endl;
+        cout << "Enter 4 to use circular linked list [doubly]" << endl;
+        cin >> opt_1; cout << endl;
+
+        switch (opt_1) {
+        case 1:
+        {
+            cout << "SINGLY LINKED LIST [OD]" << endl;
+            cout << "Enter 1 to insert at head" << endl;
+            cout << "Enter 2 to insert at end" << endl;
+            cout << "Enter 3 to insert at data" << endl;
+            cout << "Enter 4 to sort" << endl;
+            cout << "Enter 5 to delete at head" << endl;
+            cout << "Enter 6 to delete at end" << endl;
+            cout << "Enter 7 to delete a specific node" << endl;
+            cout << "Enter 8 to find a node" << endl;
+            cout << "Enter 9 to display" << endl;
+            cin >> opt_2;
+            cout << endl;
+
+            switch (opt_2) {
+            case 1:
+            {
+                sl.insert_at_head();
+                break;
+            }
+            case 2:
+            {
+                sl.insert_at_end();
+                break;
+            }
+            case 3:
+            {
+                int temp_data;
+                cout << "Enter the data after which you want to insert"; cin >> temp_data; cout << endl;
+                sl.insert_at_data(temp_data);
+                break;
+            }
+            case 4:
+            {
+                int count = sl.count;
+                count = count * 2;
+                for (int i = 0; i < count; i++) {
+                    sl.custom_sort();
+                }
+                break;
+            }
+            case 5:
+            {
+                sl.delete_at_head();
+                break;
+            }
+            case 6:
+            {
+                sl.delete_at_end();
+                break;
+            }
+            case 7:
+            {
+                int temp_data;
+                cout << "Enter the data you want to delete"; cin >> temp_data; cout << endl;
+                sl.delete_at_data(temp_data);
+                break;
+            }
+            case 8:
+            {
+                int temp_data;
+                cout << "Enter the data you want search : "; cin >> temp_data; cout << endl;
+                sl.find_data(temp_data);
+                break;
+            }
+            case 9:
+            {
+                sl.display_singly();
+                break;
+            }
+            }
+            break;
+        }
+        case 2:
+        {
+            cout << "DOUBLY LINKED LIST [OD]" << endl;
+            cout << "Enter 1 to insert at head" << endl;
+            cout << "Enter 2 to insert at end" << endl;
+            cout << "Enter 3 to insert at data" << endl;
+            cout << "Enter 4 to sort" << endl;
+            cout << "Enter 5 to delete at head" << endl;
+            cout << "Enter 6 to delete at end" << endl;
+            cout << "Enter 7 to delete a specific node" << endl;
+            cout << "Enter 8 to find a node" << endl;
+            cout << "Enter 9 to display" << endl;
+            cin >> opt_2;
+            cout << endl;
+
+
+            switch (opt_2) {
+            case 1:
+            {
+                dl.insert_at_head();
+                break;
+            }
+            case 2:
+            {
+                dl.insert_at_end();
+                break;
+            }
+            case 3:
+            {
+                int temp_data;
+                cout << "Enter the data after which you want to insert"; cin >> temp_data; cout << endl;
+                dl.insert_at_data(temp_data);
+                break;
+            }
+            case 4:
+            {
+                int count = sl.count;
+                count = count * 2;
+                for (int i = 0; i < count; i++) {
+                    dl.custom_sort();
+                }
+                break;
+            }
+            case 5:
+            {
+                dl.delete_at_head();
+                break;
+            }
+            case 6:
+            {
+                dl.delete_at_end();
+                break;
+            }
+            case 7:
+            {
+                int temp_data;
+                cout << "Enter the data you want to delete"; cin >> temp_data; cout << endl;
+                dl.delete_at_data(temp_data);
+                break;
+            }
+            case 8:
+            {
+                int temp_data;
+                cout << "Enter the data you want search : "; cin >> temp_data; cout << endl;
+                dl.find_data(temp_data);
+                break;
+            }
+            case 9:
+            {
+                dl.display_doubly();
+                break;
+            }
+            }
+            break;
+        }
+        case 3:
+        {
+            cout << "CIRCULAR LINKED LIST [Singly] [OD]" << endl;
+            break;
+        }
+        case 4:
+        {
+            cout << "CIRCULAR LINKED LIST [Doubly] [OD]" << endl;cout << "Enter 1 to insert at head" << endl;
+            cout << "Enter 2 to insert at end" << endl;
+            cout << "Enter 3 to insert at data" << endl;
+            cout << "Enter 4 to sort" << endl;
+            cout << "Enter 5 to delete at head" << endl;
+            cout << "Enter 6 to delete at end" << endl;
+            cout << "Enter 7 to delete a specific node" << endl;
+            cout << "Enter 8 to find a node" << endl;
+            cout << "Enter 9 to display" << endl;
+            cin >> opt_2;
+            cout << endl;
+
+
+            switch (opt_2) {
+            case 1:
+            {
+                cdl.insert_at_head();
+                break;
+            }
+            case 2:
+            {
+                cdl.insert_at_end();
+                break;
+            }
+            case 3:
+            {
+                int temp_data;
+                cout << "Enter the data after which you want to insert"; cin >> temp_data; cout << endl;
+                cdl.insert_at_data(temp_data);
+                break;
+            }
+            case 4:
+            {
+                int count = sl.count;
+                count = count * 2;
+                for (int i = 0; i < count; i++) {
+                    cdl.custom_sort();
+                }
+                break;
+            }
+            case 5:
+            {
+                cdl.delete_at_head();
+                break;
+            }
+            case 6:
+            {
+                cdl.delete_at_end();
+                break;
+            }
+            case 7:
+            {
+                int temp_data;
+                cout << "Enter the data you want to delete"; cin >> temp_data; cout << endl;
+                cdl.delete_at_data(temp_data);
+                break;
+            }
+            case 8:
+            {
+                int temp_data;
+                cout << "Enter the data you want search : "; cin >> temp_data; cout << endl;
+                cdl.find_data(temp_data);
+                break;
+            }
+            case 9:
+            {
+                cdl.display_circular_doubly();
+                break;
+            }
+            }
+            break;
+        }
+        }
+    }
+}

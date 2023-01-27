@@ -1,0 +1,1 @@
+subtract 48 from a character to get real val;

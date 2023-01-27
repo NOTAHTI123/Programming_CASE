@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int fibo(int num, int pow)
+{
+    if(pow==1){
+        return num;
+    }
+    return num * fibo(num, pow - 1);
+}
+
+int main()
+{
+    int num;
+    cout << "Enter the Number : ";
+    cin >> num;
+    cout << endl;
+    int pow;
+    cout << "Enter the power : ";
+    cin >> pow;
+    cout << endl;
+    cout << fibo(num, pow);
+}

@@ -1,0 +1,188 @@
+#include <iostream>
+using namespace std;
+
+
+
+class node{
+    public:
+    node* next;
+    node *within;
+    int data;
+    int list_num;
+};
+
+node *head_list = NULL;
+node *in_list = NULL;
+
+class list:public node{
+    public:
+        static int count_nodes;
+
+        virtual node *create_node()
+        {
+            node *newnode = new node;
+            return newnode;
+    }
+
+    virtual void read_data(node& newnode){
+        cout << "Enter the list number";
+        cin >> newnode.list_num;
+        cout << endl;
+    }
+
+    virtual void insert_at_head(){
+        node *newnode = create_node();
+        read_data(*newnode);
+        if(head_list == NULL){
+            head_list = newnode;
+            head_list->within = NULL;
+            head_list->next = NULL;
+            count_nodes++;
+        }
+        else{
+            newnode->next = head_list;
+            head_list = newnode;
+            head_list->within = NULL;
+            count_nodes++;
+        }
+    }
+
+    virtual void insert_at_node(int n_n){}
+};
+
+int list::count_nodes = 0;
+
+class list_of_list:public list{
+    public:
+        int count_temp = 0; 
+        
+        node *create_node()
+        {
+            node *newnode = new node;
+            return newnode;
+    }
+
+    bool check(int n_n){
+        if(head_list == NULL){
+            return false;
+        }
+        else{
+            int i = 1;
+            node *temp = head_list;
+            while(i<=n_n && temp!=NULL){
+                if(i == n_n){
+                    return true;
+                }
+                temp = temp->next;
+                i++;
+            }
+        }
+    }
+
+    void read_data(node& newnode){
+        cout << "Enter the data : ";
+        cin >> newnode.data;
+        cout << endl;
+    }
+
+        void insert_at_node(int node_number)
+        {
+            if(!check(node_number)){
+            cout << "The node does not exist" << endl;
+            }
+            else{
+            int i = 1;
+            node *temp = head_list;
+            while (i<=node_number){
+                if(i==node_number){
+                    node *newnode = create_node();
+                    read_data(*newnode);
+                    if(in_list == NULL){
+                        in_list = newnode;
+                        temp->within = in_list;
+                        in_list->next = NULL;
+                    }
+                    else{
+                        node *temp_store = temp->within;
+                        temp->within = newnode;
+                        newnode->next = temp_store;
+                        in_list = newnode;
+                    }
+                }
+                    i++;
+                    temp = temp->next;
+            }
+            }
+    }
+
+    void display(int n_n){
+            int temp_count = 1;
+            if(head_list==NULL){
+            cout << "The list is empty [Parent list]" << endl;
+            }
+            else{
+            node *temp = head_list;
+            while (temp_count <= n_n && temp!=NULL)
+            {
+                if (temp_count == n_n)
+                {
+                    node *temp_within = temp->within;
+                    if(temp_within!=NULL){
+                        
+                    while(temp_within!=NULL){
+                        cout << temp_within->data << "\t";
+                        temp_within = temp_within->next;
+                    }
+                    cout << endl;
+                    }
+                }
+                temp = temp->next;
+                temp_count++;
+                }
+            }
+    }
+};
+
+int main(){
+    list l;
+    int opt;
+    while(1){
+        cout << "Enter 1 to Enter a new list" << endl;
+        cout << "Enter 2 to insert a list at a specific node" << endl;
+        cout << "Enter 3 to display a list at a specific node" << endl;
+        cin >> opt;
+        cout << endl;
+        switch (opt)
+        {
+        case 1:
+        {
+            l.insert_at_head();
+            break;
+        }
+
+        case 2:
+        {
+            int n_n;
+            cout << "Enter the node number at which you want to make a new list : ";
+            cin >> n_n;
+            cout << endl;
+            list *l = new list_of_list;
+            l->insert_at_node(n_n);
+            break;
+        }
+
+        case 3:
+        {
+            int n_n;
+            cout << "Enter the node number at which you want to display : ";
+            cin >> n_n;
+
+            list_of_list l_p;
+            l_p.display(n_n);
+
+            break;
+        }
+
+        }
+    }
+}

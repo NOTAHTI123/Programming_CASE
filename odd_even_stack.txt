@@ -1,0 +1,56 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+void seperate(stack<int>&s1, stack<int>&s2) {
+    int temp = -1;
+
+    while (s1.size()!=0) {
+        if (s1.top() % 2 == 0) {
+            temp = s1.top();
+            s1.pop();
+            while (s2.size() != 0 ) {
+                if (s2.top() % 2 != 0) {
+
+                    s1.push(s2.top());
+                    s2.pop();
+                }
+                else {
+                    break;
+                }
+            }
+            s2.push(temp);
+            temp = -1;
+        }
+        else {
+            s2.push(s1.top());
+            s1.pop();
+        }
+    }
+
+    while (s2.size() != 0) {
+        if (s2.top() % 2 != 0) {
+
+            s1.push(s2.top());
+            s2.pop();
+        }
+        else {
+            break;
+        }
+    }
+}
+
+int main() {
+    stack<int>s1;
+    stack<int>s2;
+    s1.push(6);
+    s1.push(4);
+    s1.push(9);
+    s1.push(7);
+    s1.push(8);
+    s1.push(5);
+
+    seperate(s1, s2);
+
+    cout<<s2.top();
+}

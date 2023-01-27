@@ -1,0 +1,158 @@
+#include <iostream>
+using namespace std;
+
+class node
+{
+
+public:
+	node *next;
+	int priority;
+	string name;
+
+	void read_data()
+	{
+		cout << "Enter the Patients name : ";
+		cin >> name;
+		cout << endl;
+		cout << "Enter the Priority : ";
+		cin >> priority;
+		cout << endl;
+	}
+};
+
+class queue_ : public node
+{
+public:
+	node *front;
+	node *back;
+
+	void enqueue(node *newnode)
+	{
+		if (front == NULL)
+		{
+			front = newnode;
+			back = newnode;
+			back->next = NULL;
+		}
+		else
+		{
+			if (newnode->priority > front->priority)
+			{
+				newnode->next = front;
+				front = newnode;
+			}
+
+			else if (newnode->priority < back->priority)
+			{
+				back->next = newnode;
+				newnode->next = NULL;
+
+				back = newnode;
+			}
+
+			else
+			{
+				node *temp = front;
+
+				while (temp != back)
+				{
+					if (newnode->priority > temp->next->priority)
+					{
+						break;
+					}
+					else
+					{
+						temp = temp->next;
+					}
+				}
+				node *temp_ = temp->next;
+
+				temp->next = newnode;
+				newnode->next = temp_;
+
+			}
+		}
+	}
+
+	//4>3
+	//5>4
+	void dequeue()
+	{
+		if (front == NULL)
+		{
+			cout << "The Queue is Empty" << endl;
+		}
+
+		else
+		{
+			cout << "Name of Patient that is discharged = " << front->name << endl
+				 << endl;
+			front = front->next;
+		}
+	}
+
+	void display()
+	{
+		if (front == NULL)
+		{
+			cout << "The Queue is Empty" << endl;
+		}
+		else
+		{
+			int count = 1;
+			node *temp = front;
+			while (temp != NULL)
+			{
+				cout << "Patient NO : " << count << endl;
+				cout << "Patient Name = " << temp->name << endl;
+				cout << "Patient Priority = " << temp->priority << endl;
+
+				cout << "\n\n";
+				temp = temp->next;
+			}
+		}
+	}
+};
+
+int main()
+{
+	cout << "HMS" << endl
+		 << endl;
+
+	int opt;
+
+	queue_ *q = new queue_();
+
+	while (1)
+	{
+		cout << "Enter 1 to Admit a new patient" << endl;
+		cout << "Enter 2 to Discharge a Patient" << endl;
+		cout << "Enter 3 to display the patients in queue" << endl;
+
+		cin >> opt;
+		cout << endl;
+
+		switch (opt)
+		{
+		case 1:
+		{
+			node *newnode = new node;
+			newnode->read_data();
+			q->enqueue(newnode);
+			break;
+		}
+
+		case 2:
+		{
+			q->dequeue();
+			break;
+		}
+
+		case 3:
+		{
+			q->display();
+			break;
+		}
+		}
+	}
+}
