@@ -20,14 +20,15 @@ spec:
       - name: react-app
         image: kparwaz74/getting-started:jenkins-python-v1
         imagePullPolicy: Always
+
         ports:
         - containerPort: 5173
         env:
         - name: DB-PORT
           valueFrom:
             configMapKeyRef:
-              name: sample-python-app-cm
-              key: db-port
+              name: react-app-cm
+              key: db-port	
 
 
 service.yml
